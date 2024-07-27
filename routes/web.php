@@ -41,6 +41,8 @@ Route::get('/dataPembayaran', [StudentController::class, 'pembayaran'])->name('d
 Route::get('/siswa/{student}/payments/create', [PaymentController::class, 'create'])->name('bayarSPP');
 Route::post('/siswa/{student}/payments', [PaymentController::class, 'store'])->name('simpanSPP');
 Route::get('/siswa/{studentId}/kwitansi', [PaymentController::class, 'receipt'])->name('KwitansiSPP');
+Route::get('/export-rekap-ganjil', [PaymentController::class, 'exportRekapGanjil'])->name('exportRekapGanjil');
+Route::get('/export-rekap-genap', [PaymentController::class, 'exportRekapGenap'])->name('exportRekapGenap');
 
 Route::get('/dataPengeluaran', [PengeluaranController::class, 'index'])->name('DataPengeluaran');
 Route::post('pengeluaran', [PengeluaranController::class, 'store'])->name('storePengeluaran');

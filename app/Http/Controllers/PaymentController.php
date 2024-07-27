@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Payment;
 use App\Models\AcademicYear;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PaymentsExport;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -37,6 +40,7 @@ class PaymentController extends Controller
   public function store(Request $request, $studentId)
   {
     $request->validate([
+      'class' => 'required|string|max:255',
       'amount' => 'required|integer|min:1',
       'academic_year_id' => 'required|exists:academic_years,id',
       'month' => 'required|array|min:1',
@@ -44,6 +48,9 @@ class PaymentController extends Controller
     ]);
 
     $student = Student::findOrFail($studentId);
+    $student->class = $request->class;
+    $student->save();
+
     $months = $request->month;
     $amountPerMonth = $request->amount;
     $totalAmount = $amountPerMonth * count($months);
@@ -70,8 +77,14 @@ class PaymentController extends Controller
   public function receipt($studentId)
   {
     $student = Student::findOrFail($studentId);
+
+    // Get the latest payment timestamp
+    $latestPaymentTimestamp = Payment::where('student_id', $studentId)
+      ->max('created_at');
+
+    // Get the payments made at the latest timestamp
     $payments = Payment::where('student_id', $studentId)
-      ->where('is_paid', true)
+      ->where('created_at', $latestPaymentTimestamp)
       ->get();
 
     if ($payments->isEmpty()) {
@@ -84,7 +97,7 @@ class PaymentController extends Controller
     $endMonth = $months->last();
     $monthRange = $this->getMonthName($startMonth) . ' - ' . $this->getMonthName($endMonth);
 
-    // Calculate total amount
+    // Calculate total amount for the latest payment session
     $totalAmount = $payments->sum('amount');
 
     return view('KwitansiSPP', compact('student', 'monthRange', 'totalAmount', 'payments'));
@@ -119,4 +132,21 @@ class PaymentController extends Controller
     return view('welcome', compact('months', 'totals'));
   }
 
+  public function exportRekapGanjil()
+  {
+    $startDate = Carbon::now()->year . '-01-01'; // January 1st of the current year
+    $endDate = Carbon::now()->year . '-06-30';   // June 30th of the current year
+
+    $payments = Payment::whereBetween('created_at', [$startDate, $endDate])->get();
+    return Excel::download(new PaymentsExport($payments), 'rekap_ganjil.xlsx');
+  }
+
+  public function exportRekapGenap()
+  {
+    $startDate = Carbon::now()->year . '-07-01'; // July 1st of the current year
+    $endDate = Carbon::now()->year . '-12-31';   // December 31st of the current year
+
+    $payments = Payment::whereBetween('created_at', [$startDate, $endDate])->get();
+    return Excel::download(new PaymentsExport($payments), 'rekap_genap.xlsx');
+  }
 }

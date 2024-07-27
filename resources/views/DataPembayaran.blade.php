@@ -26,6 +26,12 @@
   </div>
 </div>
 
+<div class="mb-3">
+  <a href="{{ route('exportRekapGanjil') }}" class="btn btn-success">Rekap Ganjil (Jan-Jun)</a>
+  <a href="{{ route('exportRekapGenap') }}" class="btn btn-primary">Rekap Genap (Jul-Dec)</a>
+</div>
+
+
 <table id="dataStudent" class="table table-striped" style="width:100%">
   <thead>
     <tr>

@@ -20,7 +20,12 @@
 
   <form action="{{ route('simpanSPP', $student->id) }}" method="POST">
     @csrf
-    <input type="hidden" name="academic_year_id" value="{{ $academicYear->id }}"> <!-- Include hidden input for academic year -->
+    <input type="hidden" name="academic_year_id" value="{{ $academicYear->id }}">
+
+    <div class="form-group my-4">
+      <label for="class">Kelas</label>
+      <input type="text" class="form-control" id="class" name="class" value="{{ old('class', $student->class) }}" required>
+    </div>
 
     <div class="form-group my-4">
       <label for="month">Bulan</label>

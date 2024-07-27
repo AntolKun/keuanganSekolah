@@ -60,6 +60,7 @@
     <div class="content">
       <div><strong>Nama:</strong> {{ $student->name }}</div>
       <div><strong>NIS:</strong> {{ $student->nis }}</div>
+      <div><strong>Kelas:</strong> {{ $student->class }}</div>
       <div><strong>Tahun Ajaran:</strong> {{ $payments->first()->academicYear->year }}</div>
       <div><strong>Bulan Pembayaran:</strong> {{ $monthRange }}</div>
       <div><strong>Total Jumlah Dibayar:</strong> Rp. {{ number_format($totalAmount, 2, ',', '.') }}</div>
