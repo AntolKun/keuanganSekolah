@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PengeluaranExport;
 
 class PengeluaranController extends Controller
 {
@@ -67,5 +69,23 @@ class PengeluaranController extends Controller
   {
     $pengeluaran = Pengeluaran::find($id);
     return view('KwitansiPengeluaran', compact('pengeluaran'));
+  }
+
+  public function rekapGanjil()
+  {
+    $pengeluarans = Pengeluaran::whereMonth('tanggal', '>=', 1)
+      ->whereMonth('tanggal', '<=', 6)
+      ->get();
+
+    return Excel::download(new PengeluaranExport($pengeluarans), 'Rekap_Pengeluaran_Ganjil.xlsx');
+  }
+
+  public function rekapGenap()
+  {
+    $pengeluarans = Pengeluaran::whereMonth('tanggal', '>=', 7)
+      ->whereMonth('tanggal', '<=', 12)
+      ->get();
+
+    return Excel::download(new PengeluaranExport($pengeluarans), 'Rekap_Pengeluaran_Genap.xlsx');
   }
 }

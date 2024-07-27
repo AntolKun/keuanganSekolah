@@ -50,4 +50,6 @@ Route::get('pengeluaran/{id}', [PengeluaranController::class, 'show'])->name('sh
 Route::put('pengeluaran/{id}', [PengeluaranController::class, 'update'])->name('updatePengeluaran');
 Route::delete('pengeluaran/{id}', [PengeluaranController::class, 'destroy'])->name('hapusPengeluaran');
 Route::get('pengeluaran/{id}/kwitansi', [PengeluaranController::class, 'kwitansi'])->name('kwitansiPengeluaran');
+Route::get('rekap-ganjil', [PengeluaranController::class, 'rekapGanjil'])->name('exportPengeluaranGanjil');
+Route::get('rekap-genap', [PengeluaranController::class, 'rekapGenap'])->name('exportPengeluaranGenap');
 

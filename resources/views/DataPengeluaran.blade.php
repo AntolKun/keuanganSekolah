@@ -104,6 +104,11 @@
   </div>
 </div>
 
+<div class="mb-3">
+  <a href="{{ route('exportPengeluaranGanjil') }}" class="btn btn-success">Rekap Ganjil (Jan-Jun)</a>
+  <a href="{{ route('exportPengeluaranGenap') }}" class="btn btn-primary">Rekap Genap (Jul-Dec)</a>
+</div>
+
 <table id="dataPengeluaran" class="table table-striped" style="width:100%">
   <thead>
     <tr>
