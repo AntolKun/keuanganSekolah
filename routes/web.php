@@ -6,6 +6,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AcademicYearController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,7 @@ use App\Http\Controllers\PengeluaranController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/dataAdmin', [AdminController::class, 'index'])->name('dataAdmin');
 Route::post('/storeAdmin', [AdminController::class, 'store'])->name('storeAdmin');
