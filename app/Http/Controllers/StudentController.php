@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -11,7 +12,8 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('DataSiswa', compact('students'));
+        $academicYears = AcademicYear::all();
+        return view('DataSiswa', compact('students', 'academicYears'));
     }
 
     public function pembayaran()
@@ -28,6 +30,7 @@ class StudentController extends Controller
             'dob' => 'required|date',
             'address' => 'required|string|max:255',
             'spp' => 'required|numeric',
+            'academic_year_id' => 'required|exists:academic_years,id', // Tambahkan validasi ini
         ]);
 
         try {
@@ -39,6 +42,7 @@ class StudentController extends Controller
                 'spp' => $request->spp,
                 'total_paid' => $request->total_paid ?? 0,
                 'is_paid' => $request->is_paid ?? false,
+                'academic_year_id' => $request->academic_year_id, // Tambahkan ini
             ]);
 
             return back()->with('success', 'Berhasil menambahkan siswa');
@@ -56,6 +60,7 @@ class StudentController extends Controller
             'dob' => 'required|date',
             'address' => 'required|string|max:255',
             'spp' => 'required|numeric',
+            'academic_year_id' => 'required|exists:academic_years,id', // Tambahkan validasi ini
         ]);
 
         try {
@@ -67,6 +72,7 @@ class StudentController extends Controller
                 'spp' => $request->spp,
                 'total_paid' => $request->total_paid ?? $student->total_paid,
                 'is_paid' => $request->is_paid ?? $student->is_paid,
+                'academic_year_id' => $request->academic_year_id, // Tambahkan ini
             ]);
 
             return back()->with('success', 'Siswa berhasil di update');

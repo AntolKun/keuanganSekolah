@@ -62,19 +62,19 @@
 							</a>
 						</li>
 						<li class="sidebar-item">
-							<a class="sidebar-link" href="/dataSiswa" aria-expanded="false">
-								<span>
-									<i class="ti ti-medal"></i>
-								</span>
-								<span class="hide-menu">Data Siswa</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
 							<a class="sidebar-link" href="/dataTahunPelajaran" aria-expanded="false">
 								<span>
 									<i class="ti ti-medal"></i>
 								</span>
 								<span class="hide-menu">Data Tahun Pelajaran</span>
+							</a>
+						</li>
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="/dataSiswa" aria-expanded="false">
+								<span>
+									<i class="ti ti-medal"></i>
+								</span>
+								<span class="hide-menu">Data Siswa</span>
 							</a>
 						</li>
 						<li class="sidebar-item">

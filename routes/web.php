@@ -40,7 +40,7 @@ Route::delete('hapusTahunPelajaran/{academicYear}', [AcademicYearController::cla
 Route::get('/dataPembayaran', [StudentController::class, 'pembayaran'])->name('dataPembayaran');
 Route::get('/siswa/{student}/payments/create', [PaymentController::class, 'create'])->name('bayarSPP');
 Route::post('/siswa/{student}/payments', [PaymentController::class, 'store'])->name('simpanSPP');
-Route::get('/siswa/{payment}/kwitansi', [PaymentController::class, 'receipt'])->name('KwitansiSPP');
+Route::get('/siswa/{studentId}/kwitansi', [PaymentController::class, 'receipt'])->name('KwitansiSPP');
 
 Route::get('/dataPengeluaran', [PengeluaranController::class, 'index'])->name('DataPengeluaran');
 Route::post('pengeluaran', [PengeluaranController::class, 'store'])->name('storePengeluaran');

@@ -17,6 +17,7 @@ class CreateStudentsTable extends Migration
             $table->integer('spp');
             $table->integer('total_paid')->default(0);
             $table->boolean('is_paid')->default(false);
+            $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,3 +27,4 @@ class CreateStudentsTable extends Migration
         Schema::dropIfExists('students');
     }
 }
+

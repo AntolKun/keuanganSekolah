@@ -38,7 +38,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header d-flex align-items-center">
-        <h4 class="modal-title" id="modalEditStudentLabel">Edit Student</h4>
+        <h4 class="modal-title" id="modalEditStudentLabel">Edit Siswa</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -47,7 +47,7 @@
           @csrf
           @method('PUT')
           <div class="form-group my-4">
-            <label for="editName">Name</label>
+            <label for="editName">Nama</label>
             <input type="text" name="name" class="form-control" id="editName" required>
           </div>
           <div class="form-group my-4">
@@ -59,12 +59,20 @@
             <input type="date" name="dob" class="form-control" id="editDob" required>
           </div>
           <div class="form-group my-4">
-            <label for="editAddress">Address</label>
+            <label for="editAddress">Alamat</label>
             <input type="text" name="address" class="form-control" id="editAddress" required>
           </div>
           <div class="form-group my-4">
             <label for="editSpp">SPP</label>
             <input type="number" name="spp" class="form-control" id="editSpp" required>
+          </div>
+          <div class="form-group my-4">
+            <label for="editAcademicYear">Tahun Ajaran</label>
+            <select name="academic_year_id" class="form-select" id="editAcademicYear" required>
+              @foreach($academicYears as $year)
+              <option value="{{ $year->id }}">{{ $year->year }}</option>
+              @endforeach
+            </select>
           </div>
         </form>
       </div>
@@ -76,7 +84,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalTambahStudent" tabindex="-1" aria-labelledby="modalTambahStudent" style="display: none;" aria-hidden="true">
+<div class="modal fade" id="modalTambahStudent" tabindex="-1" aria-labelledby="modalTambahStudent" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header d-flex align-items-center">
@@ -89,7 +97,7 @@
         <form action="{{ route('storeSiswa') }}" method="POST">
           @csrf
           <div class="form-group my-4">
-            <label for="name">Name</label>
+            <label for="name">Nama</label>
             <input type="text" name="name" class="form-control" id="name" required>
           </div>
           <div class="form-group my-4">
@@ -101,12 +109,20 @@
             <input type="date" name="dob" class="form-control" id="dob" required>
           </div>
           <div class="form-group my-4">
-            <label for="address">Address</label>
+            <label for="address">Alamat</label>
             <input type="text" name="address" class="form-control" id="address" required>
           </div>
           <div class="form-group my-4">
             <label for="spp">SPP</label>
             <input type="number" name="spp" class="form-control" id="spp" required>
+          </div>
+          <div class="form-group my-4">
+            <label for="academic_year_id">Tahun Ajaran</label>
+            <select name="academic_year_id" class="form-select" id="academic_year_id" required>
+              @foreach($academicYears as $year)
+              <option value="{{ $year->id }}">{{ $year->year }}</option>
+              @endforeach
+            </select>
           </div>
           <button type="submit" class="btn btn-success text-black font-medium waves-effect text-start">
             Tambah Siswa
@@ -129,6 +145,7 @@
       <th>NIS</th>
       <th>Tanggal Lahir</th>
       <th>Alamat</th>
+      <th>Tahun Ajaran</th>
       <th>SPP</th>
       <th width="400px">Aksi</th>
     </tr>
@@ -140,9 +157,12 @@
       <td>{{ $student->nis }}</td>
       <td>{{ $student->dob }}</td>
       <td>{{ $student->address }}</td>
+      <td>{{ $student->academicYear->year }}</td>
       <td>Rp. {{ number_format($student->spp, 2, ',', '.') }}</td>
       <td>
-        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditStudent" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-nis="{{ $student->nis }}" data-dob="{{ $student->dob }}" data-address="{{ $student->address }}" data-spp="{{ $student->spp }}">Edit</button>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditStudent" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-nis="{{ $student->nis }}" data-dob="{{ $student->dob }}" data-address="{{ $student->address }}" data-spp="{{ $student->spp }}" data-academic_year_id="{{ $student->academic_year_id }}">
+          Edit
+        </button>
         <form action="{{ route('hapusSiswa', $student->id) }}" method="POST" style="display:inline;">
           @csrf
           @method('DELETE')
@@ -214,6 +234,7 @@
       var studentDob = button.getAttribute('data-dob');
       var studentAddress = button.getAttribute('data-address');
       var studentSpp = button.getAttribute('data-spp');
+      var studentYearId = button.getAttribute('data-academic_year_id');
 
       var form = editModal.querySelector('form');
       form.action = '{{ route("editSiswa", ":id") }}'.replace(':id', studentId);
@@ -222,23 +243,7 @@
       form.querySelector('#editDob').value = studentDob;
       form.querySelector('#editAddress').value = studentAddress;
       form.querySelector('#editSpp').value = studentSpp;
-    });
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var paymentModal = document.getElementById('modalPayment');
-    paymentModal.addEventListener('show.bs.modal', function(event) {
-      var button = event.relatedTarget;
-      var studentId = button.getAttribute('data-id');
-      var studentName = button.getAttribute('data-name');
-      var studentSpp = button.getAttribute('data-spp');
-      var totalPaid = button.getAttribute('data-total_paid');
-
-      var form = paymentModal.querySelector('form');
-      form.querySelector('#paymentStudentId').value = studentId;
-      form.querySelector('#paymentStudentName').value = studentName;
-      form.querySelector('#paymentSpp').value = studentSpp;
-      form.querySelector('#paymentTotalPaid').value = totalPaid;
+      form.querySelector('#editAcademicYear').value = studentYearId;
     });
   });
 </script>

@@ -11,7 +11,10 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('academic_year_id')->constrained()->onDelete('cascade');
+            $table->integer('month');
             $table->integer('amount');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
         });
     }
@@ -21,3 +24,4 @@ class CreatePaymentsTable extends Migration
         Schema::dropIfExists('payments');
     }
 }
+

@@ -11,11 +11,20 @@ class Payment extends Model
 
     protected $fillable = [
         'student_id',
+        'academic_year_id',
+        'month',
         'amount',
+        'is_paid',
     ];
 
     public function student()
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
 }
+

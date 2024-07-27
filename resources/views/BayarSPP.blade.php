@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h2>Make Payment for {{ $student->name }}</h2>
+  <h2>Pembayaran SPP untuk {{ $student->name }}</h2>
 
   @if($errors->any())
   <div class="alert alert-danger">
@@ -14,13 +14,31 @@
   </div>
   @endif
 
+  <div class="mb-4 pt-4">
+    <strong>Tahun Ajaran:</strong> {{ $academicYear->year }}
+  </div>
+
   <form action="{{ route('simpanSPP', $student->id) }}" method="POST">
     @csrf
+    <input type="hidden" name="academic_year_id" value="{{ $academicYear->id }}"> <!-- Include hidden input for academic year -->
+
     <div class="form-group my-4">
-      <label for="amount">Amount</label>
-      <input type="number" class="form-control" id="amount" name="amount" required>
+      <label for="month">Bulan</label>
+      <select class="form-control" id="month" name="month[]" multiple required style="font-size: 16px; height: 200px;">
+        @foreach ($months as $monthNumber => $monthName)
+        <option value="{{ $monthNumber }}">{{ $monthName }}</option>
+        @endforeach
+      </select>
+      <small class="form-text text-muted">Pilih bulan yang ingin Anda bayar. Anda bisa memilih lebih dari satu bulan.</small>
     </div>
-    <button type="submit" class="btn btn-primary">Submit Payment</button>
+
+    <div class="form-group my-4">
+      <label for="amount">Jumlah Pembayaran (per bulan)</label>
+      <input type="number" class="form-control" id="amount" name="amount" value="{{ old('amount', $student->spp) }}" required>
+      <small class="form-text text-muted">Jumlah pembayaran per bulan. Total pembayaran akan dikalikan dengan jumlah bulan yang dipilih.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Pembayaran</button>
   </form>
 </div>
 @endsection
