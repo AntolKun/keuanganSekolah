@@ -49,7 +49,7 @@
             <input type="text" name="deskripsi" class="form-control" id="deskripsi" required>
           </div>
           <div class="form-group my-4">
-            <label for="jumlah">Jumlah</label>
+            <label for="jumlah">Harga</label>
             <input type="number" name="jumlah" class="form-control" id="jumlah" required>
           </div>
           <div class="form-group my-4">
@@ -87,7 +87,7 @@
             <input type="text" name="deskripsi" class="form-control" id="editDeskripsi" required>
           </div>
           <div class="form-group my-4">
-            <label for="editJumlah">Jumlah</label>
+            <label for="editJumlah">Harga</label>
             <input type="number" name="jumlah" class="form-control" id="editJumlah" required>
           </div>
           <div class="form-group my-4">
@@ -113,7 +113,7 @@
   <thead>
     <tr>
       <th>Deskripsi</th>
-      <th>Jumlah</th>
+      <th>Harga</th>
       <th>Tanggal</th>
       <th width="400px">Aksi</th>
     </tr>

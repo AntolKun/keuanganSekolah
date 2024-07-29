@@ -59,7 +59,7 @@
 
     <div class="content">
       <div><strong>Deskripsi:</strong> {{ $pengeluaran->deskripsi }}</div>
-      <div><strong>Jumlah:</strong> Rp. {{ number_format($pengeluaran->jumlah, 2, ',', '.') }}</div>
+      <div><strong>Harga:</strong> Rp. {{ number_format($pengeluaran->jumlah, 2, ',', '.') }}</div>
       <div><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($pengeluaran->tanggal)->format('d F Y') }}</div>
     </div>
 
