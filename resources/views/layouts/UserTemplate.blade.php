@@ -35,16 +35,10 @@
 				</div>
 				<nav class="sidebar-nav scroll-sidebar" data-simplebar>
 					<ul id="sidebarnav">
-						<!-- ============================= -->
-						<!-- Home -->
-						<!-- ============================= -->
 						<li class="nav-small-cap">
 							<i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 							<span class="hide-menu">Home</span>
 						</li>
-						<!-- =================== -->
-						<!-- Dashboard -->
-						<!-- =================== -->
 						<li class="sidebar-item">
 							<a class="sidebar-link" href="/" aria-expanded="false">
 								<span>
@@ -94,28 +88,22 @@
 							</a>
 						</li>
 					</ul>
-				</nav>
-				<!-- End Sidebar navigation -->
-				<div class="fixed-profile p-3 bg-light-secondary rounded sidebar-ad mt-3">
-					<div class="hstack gap-3">
-						<div class="john-img">
-							<img src="{{ asset('dist/images/profile/user-1.jpg') }}" class="rounded-circle" width="40" height="40" alt="">
+
+					<div class="unlimited-access hide-menu bg-light-primary position-relative my-7 rounded">
+						<div class="d-flex">
+							<div class="unlimited-access-title">
+								<h6 class="fw-semibold fs-4 mb-6 text-dark w-85">{{ Auth::user()->name }}</h6>
+								<p class="fs-4 mb-6 text-dark w-85">{{ Auth::user()->email }}</p>
+								<form action="{{ route('logout') }}" method="POST">
+									@csrf
+									<button type="submit" class="btn btn-primary fs-2 fw-semibold lh-sm">Logout</button>
+								</form>
+							</div>
 						</div>
-						<div class="john-title">
-							<h6 class="mb-0 fs-4 fw-semibold">Mathew</h6>
-							<span class="fs-2 text-dark">Designer</span>
-						</div>
-						<button class="border-0 bg-transparent text-primary ms-auto" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
-							<i class="ti ti-power fs-6"></i>
-						</button>
 					</div>
-				</div>
-				<!-- End Sidebar navigation -->
+				</nav>
 			</div>
-			<!-- End Sidebar scroll-->
 		</aside>
-		<!--  Sidebar End -->
-		<!--  Main wrapper -->
 		<div class="body-wrapper">
 			<!--  Header Start -->
 			<header class="app-header">
@@ -128,14 +116,15 @@
 						</li>
 					</ul>
 					<div class="d-block d-lg-none">
-						<img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/dark-logo.svg" class="dark-logo" width="180" alt="" />
-						<img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/logos/light-logo.svg" class="light-logo" width="180" alt="" />
+						<img src="{{ asset('dist/images/logosma.png') }}" class="dark-logo" width="180" alt="" />
+						<img src="{{ asset('dist/images/logosma.png') }}" class="light-logo" width="180" alt="" />
 					</div>
 					<button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="p-2">
 							<i class="ti ti-dots fs-7"></i>
 						</span>
 					</button>
+					<h4 class="pt-1">Halo, {{ Auth::user()->name }} ! </h4>
 					<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 						<div class="d-flex align-items-center justify-content-between">
 							<a href="javascript:void(0)" class="nav-link d-flex d-lg-none align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobilenavbar" aria-controls="offcanvasWithBothOptions">
@@ -158,26 +147,18 @@
 											<div class="d-flex align-items-center py-9 mx-7 border-bottom">
 												<img src="{{ asset('dist/images/profile/user-1.jpg') }}" class="rounded-circle" width="80" height="80" alt="" />
 												<div class="ms-3">
-													<h5 class="mb-1 fs-3">Mathew Anderson</h5>
-													<span class="mb-1 d-block text-dark">Designer</span>
+													<h5 class="mb-1 fs-3">{{ Auth::user()->name }}</h5>
+													<span class="mb-1 d-block text-dark">Admin Keuangan</span>
 													<p class="mb-0 d-flex text-dark align-items-center gap-2">
-														<i class="ti ti-mail fs-4"></i> info@modernize.com
+														<i class="ti ti-mail fs-4"></i> {{ Auth::user()->email }}
 													</p>
 												</div>
 											</div>
-											<div class="message-body">
-												<a href="page-user-profile.html" class="py-8 px-7 mt-8 d-flex align-items-center">
-													<span class="d-flex align-items-center justify-content-center bg-light rounded-1 p-6">
-														<img src="https://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-account.svg" alt="" width="24" height="24">
-													</span>
-													<div class="w-75 d-inline-block v-middle ps-3">
-														<h6 class="mb-1 bg-hover-primary fw-semibold"> My Profile </h6>
-														<span class="d-block text-dark">Account Settings</span>
-													</div>
-												</a>
-											</div>
-											<div class="d-grid py-4 px-7 pt-8">
-												<a href="authentication-login.html" class="btn btn-outline-primary">Log Out</a>
+											<div class="py-4 px-7 pt-8">
+												<form action="{{ route('logout') }}" method="POST">
+													@csrf
+													<button type="submit" class="btn btn-outline-primary">Log Out</button>
+												</form>
 											</div>
 										</div>
 									</div>
